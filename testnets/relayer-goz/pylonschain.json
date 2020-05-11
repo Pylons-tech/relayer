@@ -1,0 +1,10 @@
+{
+  "key": "zone-key",
+  "chain-id": "pylonschain-2",
+  "rpc-addr": "http://node.pylons.tech:26657",
+  "account-prefix": "cosmos",
+  "gas": 200000,
+  "gas-prices": "0.025pylons",
+  "default-denom": "pylons",
+  "trusting-period": "744h"
+}

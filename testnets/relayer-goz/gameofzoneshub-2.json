@@ -1,0 +1,10 @@
+{
+  "key": "competitor-key",
+  "chain-id": "gameofzoneshub-2",
+  "rpc-addr": "http://34.83.0.237:26657",
+  "account-prefix": "cosmos",
+  "gas": 200000,
+  "gas-prices": "0.025doubloons",
+  "default-denom": "doubloons",
+  "trusting-period": "744h"
+}
