@@ -1,5 +1,6 @@
-
 FROM golang:latest
+
+WORKDIR /relayer
 RUN export GO111MODULE="on"
 COPY . .
 
