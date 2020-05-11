@@ -1,3 +1,8 @@
+steps:  
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', 'gcloud secrets versions access latest --secret=relayer_SEEDS_PYLONSCHAIN > pylons.txt' ]
+  
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
   args: [ '-c', 'gcloud secrets versions access latest --secret=relayer_SEEDS_GOZ > goz.txt' ]
@@ -7,6 +12,10 @@
   id: Build
   args:
   - 'build'
+  - '--build-arg'
+  - 'SEEDS_PYLONSCHAIN=$$(cat pylons.txt)'
+  - '--build-arg'
+  - 'SEEDS_GOZ=$$(cat goz.txt)'
   - '-t'
   - 'gcr.io/$PROJECT_ID/relayer:$SHORT_SHA'
   - '.'
