@@ -1,10 +1,6 @@
 steps:  
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
-  args: [ '-c', 'gcloud secrets versions access latest --secret=relayer_SEEDS_PYLONSCHAIN > pylons.txt' ]
-  
-- name: gcr.io/cloud-builders/gcloud
-  entrypoint: 'bash'
   args: [ '-c', 'gcloud secrets versions access latest --secret=relayer_SEEDS_GOZ > goz.txt' ]
 
 
@@ -12,13 +8,16 @@ steps:
   id: Build
   args:
   - 'build'
-  - '--build-arg'
-  - 'SEEDS_PYLONSCHAIN=$$(cat pylons.txt)'
-  - '--build-arg'
-  - 'SEEDS_GOZ=$$(cat goz.txt)'
   - '-t'
   - 'gcr.io/$PROJECT_ID/relayer:$SHORT_SHA'
   - '.'
+
+# Tag the latest version as :latest. We use gcr.io/cloud-builders/docker here
+# and not gcr.io/$PROJECT_ID/docker because the latter may not yet exist.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'gcr.io/$PROJECT_ID/relayer:$SHORT_SHA', 'gcr.io/$PROJECT_ID/relayer']
+  wait_for: ['Build']
+  id: 'latest'
 
 # This step pushes the image to Container Registry
 # The PROJECT_ID and SHORT_SHA variables are automatically
@@ -28,6 +27,7 @@ steps:
   args:
   - 'push'
   - 'gcr.io/$PROJECT_ID/relayer:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/relayer:latest'  
 
 - name: 'gcr.io/cloud-builders/kubectl'
   id: Deploy
