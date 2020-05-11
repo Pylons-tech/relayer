@@ -27,7 +27,6 @@ steps:
   args:
   - 'push'
   - 'gcr.io/$PROJECT_ID/relayer:$SHORT_SHA'
-  - 'gcr.io/$PROJECT_ID/relayer:latest'  
 
 - name: 'gcr.io/cloud-builders/kubectl'
   id: Deploy
