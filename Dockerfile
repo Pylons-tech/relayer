@@ -22,4 +22,3 @@ RUN rly config init
 
 # NOTE: you will want to save the content from this JSON file
 RUN rly chains add-dir testnets/relayer-goz
-RUN rly keys add $CHAINID $RLYKEY
